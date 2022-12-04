@@ -1,44 +1,63 @@
-<style>
-    .modal-content{
-        background-color: #212121;
-    }
-</style>
-
 <!-- Selling confirm -->
-<div class="modal fade" id="Modal-SellingConfirm-{{ owned_item.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">
+<div class="absolute inset-0 hidden justify-center items-center h-full w-full rounded drop-shadow-2xl"
+    id="Modal-SellingConfirm-{{ owned_item.id }}" tabindex="-1" aria-hidden="true">
+    <div class="bg-gray-200 max-w-xl py-2 px-3 rounded shadow-xl mt-10">
+        <div class="io">
+            <div class="flex justify-between items-center mx-5 border-b-2 border-black pb-2 rounded-t">
+                <h5 class="text-2xl font-bold">
                     <!-- Here goes the title -->
                     {{ owned_item.name }}
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="close flex hover:rotate-90 duration-300"
+                    id="sellCross-{{ owned_item.id }}">
+                    <i class="fa-solid fa-square-xmark text-2xl p-2 text"></i>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="mx-5 pt-4">
                 <!-- Here goes the text/paragraph -->
                 <form method="POST">
 
                     {{ selling_form.hidden_tag() }}
-                
-                    <h4 class="text-center">
+
+                    <h4 class="text-center text-lg bg-gray-900 text-white p-2 rounded">
                         Are you sure you want to sell {{ owned_item.name }} for {{ owned_item.price }}$?
                     </h4>
                     <br>
-                    <h6 class="text-center">
+                    <h6 class="text-sm">
                         By clicking Sell, you will put this item back on market.
                     </h6>
                     <br>
-                    <input id="sold_item" name="sold_item" type="hidden" value="{{ owned_item.name }}">
-                    {{ selling_form.submit(class="btn btn-outline-danger btn-block") }}
+                    <div class="border-t-2 border-black py-4 flex justify-between">
+                        <input id="sold_item" name="sold_item" type="hidden" value="{{ owned_item.name }}">
+                        {{ selling_form.submit(class="px-2 py-1 border-2 border-green-700 bg-green-700  text-white hover:bg-green-400 hover:text-black hover:border-green-400 rounded-lg text-center duration-100 shadow hover:shadow-xl cursor-pointer") }}
+
+                        <button type="button"
+                            class="px-2 py-1 border-2 border-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 rounded-lg text-center duration-100 shadow hover:shadow-xl text-red-500 font-semibold"
+                            id="close-sell-{{ owned_item.id }}">
+                            Close
+                        </button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const sellbtn = document.querySelector('#sellBtn-{{ owned_item.id }}');
+        const sellModal = document.querySelector('#Modal-SellingConfirm-{{ owned_item.id }}');
+        const closeSell = document.querySelector('#close-sell-{{ owned_item.id }}');
+        const crossSell = document.querySelector('#sellCross-{{ owned_item.id }}');
+
+        const toggleModal = () => {
+            sellModal.classList.toggle('hidden');
+            sellModal.classList.toggle('flex');
+        }
+
+        sellbtn.addEventListener('click', toggleModal)
+        closeSell.addEventListener('click', toggleModal)
+        crossSell.addEventListener('click', toggleModal)
+
+    })
+</script>

@@ -1,68 +1,114 @@
-<style>
-    .modal-content{
-        background-color: #212121;
-    }
-</style>
-
-<div class="modal fade" id="Modal-MoreInfo-{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">
+<div class="absolute inset-0 hidden justify-center items-center h-full w-full rounded drop-shadow-2xl"
+    id="Modal-MoreInfo-{{ item.id }}" tabindex="-1" aria-hidden="true">
+    <div class="bg-gray-200 max-w-xl py-2 px-3 rounded shadow-xl mt-10 ">
+        <div class="">
+            <div class="flex justify-between items-center mx-5 border-b-2 border-black pb-2 rounded-t">
+                <h5 class="text-2xl font-bold ">
                     <!-- Here goes the title -->
                     {{ item.name }}
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type=" button" class="flex hover:rotate-90 duration-300" id="cross-closeInfo-{{ item.id }}"
+                    data-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-square-xmark text-2xl p-2 text"></i>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="mx-5 py-4 border-b-2 border-black ">
                 <!-- Here goes the text/paragraph -->
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est vitae similique, accusamus velit
+                blanditiis, ducimus dolore aspernatur obcaecati veniam ex illo, molestias dolores quae commodi! Neque
+                voluptatum nobis delectus ipsa aperiam reiciendis ad voluptatem quia, perferendis voluptatibus
+                perspiciatis quo quaerat corrupti accusantium, adipisci omnis commodi error iure. Id, natus placeat?
                 {{ item.description }}
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <div class="mx-3 pt-2">
+                <button type="button"
+                    class="m-2 px-2 py-1 border-2 border-red-500 text-red-500 font-semibold hover:bg-red-500  hover:text-white hover:border-red-500 rounded-lg text-center duration-100 shadow hover:shadow-xl "
+                    id="close-moreInfo-{{ item.id }}" data-modal-toggle="Modal-MoreInfo-{{ item.id }}">Close</button>
             </div>
         </div>
     </div>
 </div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const moreInfobtn = document.querySelector('#moreInfo-btn-{{ item.id }}');
+        const moreInfoModal = document.querySelector('#Modal-MoreInfo-{{ item.id }}');
+        const closeInfo = document.querySelector('#close-moreInfo-{{ item.id }}');
+        const crossInfo = document.querySelector('#cross-closeInfo-{{ item.id }}');
+
+        const toggleModal = () => {
+            moreInfoModal.classList.toggle('hidden');
+            moreInfoModal.classList.toggle('flex');
+        }
+
+        moreInfobtn.addEventListener('click', toggleModal)
+        closeInfo.addEventListener('click', toggleModal)
+        crossInfo.addEventListener('click', toggleModal)
+
+    })
+</script>
 
 <!-- Purchase confirm -->
-<div class="modal fade" id="Modal-PurchaseConfirm-{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">
+<div class="absolute inset-0 hidden justify-center items-center h-full w-full rounded drop-shadow-2xl"
+    id="Modal-PurchaseConfirm-{{ item.id }}" tabindex="-1" aria-hidden="true">
+    <div class="bg-gray-200 max-w-xl py-2 px-3 rounded shadow-xl mt-10 ">
+        <div class="">
+            <div class="flex justify-between items-center mx-5 border-b-2 border-black pb-2 rounded-t">
+                <h5 class="text-2xl font-bold">
                     <!-- Here goes the title -->
                     {{ item.name }}
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="flex hover:rotate-90 duration-300" id="purchaseCross-{{ item.id }}" aria-label="Close">
+                    <i class="fa-solid fa-square-xmark text-2xl p-2 text"></i>
                 </button>
             </div>
-            <div class="modal-body">
+            <div>
+
+            </div>
+            <div class="mx-5 pt-4 ">
                 <!-- Here goes the text/paragraph -->
                 <form method="POST">
 
                     {{ purchase_form.hidden_tag() }}
-                
-                    <h4 class="text-center">
+
+                    <h4 class="text-center text-lg bg-gray-900 text-white p-2 rounded">
                         Are you sure you want to buy {{ item.name }} for {{ item.price }}$?
                     </h4>
                     <br>
-                    <h6 class="text-center">
+                    <h6 class="text-sm ">
                         By clicking Purchase, you will purchase this item.
                     </h6>
                     <br>
-                    <input id="purchased_item" name="purchased_item" type="hidden" value="{{ item.name }}">
-                    {{ purchase_form.submit(class="btn btn-outline-success btn-block") }}
+                    <div class="border-t-2 border-black py-4 flex justify-between">
+                        <input id="purchased_item-{{ item.id }}" name="purchased_item" type="hidden" value="{{ item.name }}">
+                        {{ purchase_form.submit(class=" px-2 py-1 border-2 border-green-700 bg-green-700  text-white hover:bg-green-400 hover:text-black hover:border-green-400 rounded-lg text-center duration-100 shadow hover:shadow-xl cursor-pointer") }}
+                        <button type="button"
+                            class=" px-2 py-1 border-2 border-red-500 text-red-500 font-semibold hover:bg-red-500 hover:text-white hover:border-red-500 rounded-lg text-center duration-100 shadow hover:shadow-xl"
+                            id="close-purchase-{{ item.id }}">
+                            Close
+                        </button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const purchasebtn = document.querySelector('#purchaseBtn-{{ item.id }}');
+        const purchaseModal = document.querySelector('#Modal-PurchaseConfirm-{{ item.id }}');
+        const closePurchase = document.querySelector('#close-purchase-{{ item.id }}');
+        const crossPurchase = document.querySelector('#purchaseCross-{{ item.id }}');
+
+        const toggleModal = () => {
+            purchaseModal.classList.toggle('hidden');
+            purchaseModal.classList.toggle('flex');
+        }
+
+        purchasebtn.addEventListener('click', toggleModal)
+        closePurchase.addEventListener('click', toggleModal)
+        crossPurchase.addEventListener('click', toggleModal)
+
+    })
+</script>

@@ -1,36 +1,39 @@
 {% extends 'base.html' %}
 {% block title %}
-    Login Page
+Login Page
 {% endblock %}
 
 {% block content %}
 
-<body class="text-center">
-    <div class="container">
-        <form method="POST" class="form-signin" style="color:white">
+
+<div class="justify-center items-center flex flex-col mx-auto mt-20 ">
+    <div class="text-black p-10 items-center text-xl bg-white rounded-xl  drop-shadow-xl">
+        <form method="POST" class="form-signin " >
             {{ form.hidden_tag() }}
-            <!-- <img class="mb-4" src="https://res.cloudinary.com/jimshapedcoding/image/upload/v1597332609/android-icon-192x192_ove2a7.png" alt=""> -->
-            <h1 class="h3 mb-3 font-weight-normal">
-                Please Login
+            <h1 class="text-2xl font-bold text-center">
+                Login
             </h1>
+            <hr class="m-2">
             <br>
-            {{ form.username.label() }}
-            {{ form.username(class="form-control", placeholder="User Name") }}
-
-            {{ form.password.label() }}
-            {{ form.password(class="form-control", placeholder="Password") }}
-
+            <label class="m-2 text-lg">{{ form.username.label() }}</label>
             <br>
-
-
-            <div class="checkbox mb-3">
-               <h6>Do not have an account?</h6>
-               <a class="btn btn-sm btn-secondary" href="{{ url_for('register_page') }}">Register</a>
+            {{ form.username(class="form-control m-2 rounded-xl px-2 py-1 my-1 outline-gray-200 text-lg ring-1" , placeholder="User Name") }}
+            <br>
+            <label class="m-2 text-lg">{{ form.password.label() }}</label>
+            <br>
+            {{ form.password(class="form-control m-2 rounded-xl px-2 py-1 my-1 outline-gray-200 text-lg ring-1", placeholder="Password") }}
+            <br>
+            {{ form.submit(class="flex cursor-pointer bg-cyan-900 px-20 pb-1 text-white font-semibold rounded-2xl mx-auto mt-4 duration-100 hover:bg-cyan-800 shadow-cyan-900 shadow-sm") }}
+    
+    
+            <div class="checkbox mx-2 mt-6 pt-5 flex flex-col">
+                <h6 class="text-lg text-center">Do not have an account?</h6>
+                <a class="flex mx-auto border-2 border-slate-900 px-3 pb-1  font-semibold rounded-2xl mt-4 duration-100 hover:bg-cyan-800 hover:border-cyan-700 hover:text-white" href="{{ url_for('register_page') }}">Register</a>
             </div>
-
-            {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
-
+    
+            
+    
         </form>
     </div>
-</body>
+</div>
 {% endblock %}
